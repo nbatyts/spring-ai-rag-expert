@@ -3,15 +3,13 @@ package guru.springframework.springairagexpert.services;
 import guru.springframework.springairagexpert.model.Answer;
 import guru.springframework.springairagexpert.model.Question;
 import lombok.RequiredArgsConstructor;
-import org.springframework.ai.chat.ChatClient;
-import org.springframework.ai.chat.ChatResponse;
 import org.springframework.ai.chat.messages.Message;
 import org.springframework.ai.chat.prompt.Prompt;
 import org.springframework.ai.chat.prompt.PromptTemplate;
 import org.springframework.ai.chat.prompt.SystemPromptTemplate;
 import org.springframework.ai.document.Document;
+import org.springframework.ai.openai.OpenAiChatModel;
 import org.springframework.ai.vectorstore.SearchRequest;
-import org.springframework.ai.vectorstore.SimpleVectorStore;
 import org.springframework.ai.vectorstore.VectorStore;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.Resource;
@@ -27,7 +25,7 @@ import java.util.Map;
 @Service
 public class OpenAIServiceImpl implements OpenAIService {
 
-    final ChatClient chatClient;
+    final OpenAiChatModel chatClient;
     final VectorStore vectorStore;
 
     @Value("classpath:/templates/rag-prompt-template.st")
@@ -51,7 +49,7 @@ public class OpenAIServiceImpl implements OpenAIService {
 
         //contentList.forEach(System.out::println);
 
-        ChatResponse response = chatClient.call(new Prompt(List.of(systemMessage, userMessage)));
+        var response = chatClient.call(new Prompt(List.of(systemMessage, userMessage)));
 
         return new Answer(response.getResult().getOutput().getContent());
     }
