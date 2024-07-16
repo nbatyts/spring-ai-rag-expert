@@ -30,10 +30,10 @@ public class LoadVectorStore implements CommandLineRunner {
     public void run(String... args) throws Exception {
 
         if (vectorStore.similaritySearch("Sportsman").isEmpty()){
-            log.debug("Loading documents into vector store");
+            log.info("Loading documents into vector store");
 
             vectorStoreProperties.getDocumentsToLoad().forEach(document -> {
-                System.out.println("Loading document: " + document.getFilename());
+                log.info("Loading document: " + document.getFilename());
 
                 TikaDocumentReader documentReader = new TikaDocumentReader(document);
                 List<Document> documents = documentReader.get();
@@ -46,7 +46,7 @@ public class LoadVectorStore implements CommandLineRunner {
             });
         }
 
-        log.debug("Vector store loaded");
+        log.info("Vector store loaded");
     }
 }
 

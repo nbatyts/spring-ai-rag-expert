@@ -1,16 +1,23 @@
+server:
+  tomcat:
+    connection-timeout: 60000
+
 spring:
   application:
     name: spring-ai-rag-expert
 
   ai:
-    openai:
-      api-key: ${OPENAI_API_KEY}
-      embedding:
-       options:
-         model: text-embedding-3-small
+    ollama:
+      base-url: http://localhost:11434/
       chat:
         options:
-          model: gpt-4-turbo
+          model: llama3
+          temperature: 0.8
+
+      embedding:
+       options:
+         model: all-minilm
+
     vectorstore:
       milvus:
         client:
@@ -20,7 +27,7 @@ spring:
           password: "milvus"
         databaseName: "default"
         collectionName: "vector_store"
-        embeddingDimension: 1536
+        embeddingDimension: 384
         indexType: IVF_FLAT
         metricType: COSINE
 sfg:
