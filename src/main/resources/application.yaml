@@ -19,7 +19,7 @@ spring:
           username: "root"
           password: "milvus"
         databaseName: "default"
-        collectionName: "vector_store"
+        collectionName: "vector_store_gpt"
         embeddingDimension: 1536
         indexType: IVF_FLAT
         metricType: COSINE
